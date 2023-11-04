@@ -11,6 +11,8 @@ function App() {
   const [inputText, setInputText] = useState("");
   const [timerStarted, setTimerStarted] = useState(false);
   const [time, setTime] = useState(null);
+  const [incWord, setIncWord] = useState([]);
+  const [showResult, setShowResult] = useState(false);
 
   const currWord = strPara[index] || "";
 
@@ -29,7 +31,7 @@ function App() {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     if (!timerStarted) {
-      return `1:00`;
+      return `00:20`;
     }
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
@@ -41,7 +43,11 @@ function App() {
       alert("Time's up!");
       setTimerStarted(false);
       setInputText("");
+      setWordsTyped([]);
+      setShowResult(true);
+      setIndex(0);
       console.log(wordsTyped);
+      console.log(incWord);
     }
   };
 
@@ -59,11 +65,15 @@ function App() {
     const word = e.target.value;
     if (!timerStarted) {
       setTimerStarted(true);
-      setTime(60); // Setting time in seconds.
+      setTime(20); // Setting time in seconds.
     }
 
     if (word.charAt(word.length - 1) === " ") {
-      console.log("spacebar pressed");
+      console.log(`word: ${word}, current Word: ${currWord}`);
+      // console.log("spacebar pressed");
+      if(word !== currWord+" "){
+        setIncWord([...incWord, word]);
+      }
       setIndex(index + 1);
       setWordsTyped([...wordsTyped, inputText]);
       setInputText("");
@@ -80,6 +90,7 @@ function App() {
     setInputText("");
   };
 
+
   return (
     <div className="container">
       <div className="App fx">
@@ -93,7 +104,8 @@ function App() {
             } else if (typedWord === word.slice(0, typedWord.length)) {
               wordColor = "#697c8b"; // Partially correct word
             } else {
-              wordColor = "#ff0000"; // Incorrect word
+              wordColor = "#ff0000";
+            // Incorrect word
             }
 
             return (
@@ -129,22 +141,22 @@ function App() {
           </button>
         </div>
       </div>
-      <div className="result-container">
+      {(showResult) && <div className="result-container">
         <div className="heading">Typing speed</div>
         <div className="fx" style={{ justifyContent: "space-between" }}>
           <div className="speed-val" style={{borderRight : "solid 1px #9ca5ac", width : "50%"}}>
-            <span className="num">45</span> WPM ( Only correct words count )
+            <span className="num">{wordsTyped.length - incWord.length}</span> WPM ( Only correct words count )
           </div>
           <div className="word-text fx" style={{borderRight : "solid 1px #9ca5ac"}}>
             <span className="speed-val">Words count</span>
-            <span className="val">50</span>
+            <span className="val">{wordsTyped.length}</span>
           </div>
           <div className="word-text fx">
             <span className="speed-val">Accuracy</span>
-            <span className="val">93%</span>
+            <span className="val">{((wordsTyped.length - incWord.length)/wordsTyped.length)*100}</span>
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }
