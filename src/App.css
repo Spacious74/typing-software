@@ -5,6 +5,8 @@
 }
 *{
   font-family: 'Open sans';
+  margin: 0;
+  padding: 0;
 }
 body{
   background-color: #f0f8ff;
@@ -13,22 +15,31 @@ body{
   flex-direction: column;
   align-items: start;
   gap: 40px;
-  width: 60%;
+  width: 65%;
   margin: auto;
   margin-top: 50px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0px 10px 20px #24475f0e,
+  1px 2px 5px #24475f11;
+  margin-bottom: 30px;
 }
 .App .paragraph{
   text-align: justify;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #697c8b;
   color: #000;
+  border-bottom: solid 1px #c9cdcf;
+  padding-bottom: 30px;
+  line-height: 1.6;
 }
 
 .App .inp-container{
   gap: 20px;
 }
 .inp-container .inptext{
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   padding: 10px;
   border-radius: 10px;
   border: solid 2px #637483;
@@ -39,7 +50,7 @@ body{
 }
 
 .inp-container .timer{
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   background-color: #637483;
   padding: 10px 20px;
   border-radius: 10px;
@@ -55,7 +66,7 @@ body{
   color: #d3fcd3;
   padding: 10px 20px;
   border-radius: 10px;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   border: none;
   cursor: pointer;
   width: 250px;
@@ -68,7 +79,7 @@ body{
   border-radius: 5px;
 }
 .result-container{
-  width: 60%;
+  width: 65%;
   margin: auto;
   margin-top: 50px;
   background-color: #fff;

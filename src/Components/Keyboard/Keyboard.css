@@ -1,0 +1,115 @@
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 70%;
+  margin: auto;
+}
+
+.row {
+  list-style: none;
+  display: flex;
+  margin: 0px;
+  padding: 0px;
+}
+
+li {
+  height: 3em;
+  width: 3em;
+  color: #000000b3;
+  font-weight: bolder;
+  border-radius: 0.4em;
+  line-height: 3em;
+  letter-spacing: 1px;
+  margin: 0.4em;
+  transition: 0.3s;
+  text-align: center;
+  font-size: 1em;
+  box-shadow: 0px 2px 0px #0b2c55;
+}
+
+#tab {
+  width: 5em;
+}
+
+#caps {
+  width: 6em;
+}
+
+#left-shift {
+  width: 8em;
+}
+
+#enter {
+  width: 6em;
+}
+
+#right-shift {
+  width: 8em;
+}
+
+#ctrl {
+  width: 7em;
+}
+#ctrlright {
+  width: 7em;
+}
+#alt {
+  width: 8em;
+}
+#altright {
+  width: 8em;
+}
+
+#space {
+  width: 23.5em;
+}
+
+.pinky {
+  background-color: #86acd8;
+  border: 2px solid #86acd8;
+}
+
+.ring {
+  background-color: #a3d0ee;
+  border: 2px solid #a3d0ee;
+}
+
+.middle {
+  background-color: #c0e0fa;
+  border: 2px solid #c0e0fa;
+}
+
+.pointer1st {
+  background-color: #cad8e4;
+  border: 2px solid #cad8e4;
+}
+
+.pointer2nd {
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
+.fill-out-key {
+  background-color: slategrey;
+  border: 2px solid slategrey;
+}
+
+.hit {
+  animation: hit 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+@keyframes hit {
+  0% {
+    -webkit-transform: scale(1.2);
+    transform: translateY(3px);
+    background-color: #4f79ac;
+    box-shadow: none;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: translateY(0px);
+  }
+}

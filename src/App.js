@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
+import Keyboard from "./Components/Keyboard/Keyboard";
+import randomParagraph from "random-paragraph";
 
 function App() {
-  const para =
-    "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam numquam odit possimus eaque. Adipisci rerum beatae dignissimos deleniti consectetur ab nesciunt. Nam nobis repellat et atque porro! voluptates doloremque nulla similique blanditiis facilis voluptatibus quia obcaecati quis quaerat repellendus inventore assumenda.";
+  const [para, setPara] = useState(randomParagraph({ sentences: 2 }));
 
   const strPara = para.split(" ");
 
@@ -11,8 +12,13 @@ function App() {
   const [inputText, setInputText] = useState("");
   const [timerStarted, setTimerStarted] = useState(false);
   const [time, setTime] = useState(null);
+  const [wordsTyped, setWordsTyped] = useState([]);
+  const [totalIncWord, setTotalIncWord] = useState([]);
+  const [totalWordsTyped, setTotalWordsTyped] = useState([]);
   const [incWord, setIncWord] = useState([]);
   const [showResult, setShowResult] = useState(false);
+
+  
 
   const currWord = strPara[index] || "";
 
@@ -25,7 +31,6 @@ function App() {
         : "#ffa4a4",
   };
 
-  const [wordsTyped, setWordsTyped] = useState([]);
 
   const updateTimer = () => {
     const minutes = Math.floor(time / 60);
@@ -36,19 +41,36 @@ function App() {
     return `0${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
+  const alertShown = useRef(false); 
   const countdown = () => {
     if (time > 0) {
       setTime(time - 1);
     } else {
-      alert("Time's up!");
+      console.log("Total incorrect words : ", totalIncWord);
+      console.log("Total Words : ", totalWordsTyped);
       setTimerStarted(false);
       setInputText("");
       setShowResult(true);
       setIndex(0);
+      setPara(randomParagraph({ sentences: 2 }))
+      if (!alertShown.current) {
+        alert("Time's up!");
+        alertShown.current = true; // Set the ref to true to indicate that the alert has been shown
+      }
     }
   };
 
   useEffect(() => {
+    if (index === strPara.length) {
+      // The user has completed the current paragraph
+      setPara(randomParagraph({ sentences: 2 })); // Fetch a new random paragraph
+      setIndex(0); // Reset the index
+      setTotalIncWord([...totalIncWord, ...incWord]);
+      setTotalWordsTyped([...totalWordsTyped, ...wordsTyped]);
+      setIncWord([]);
+      setWordsTyped([]);
+  
+    }
     if (timerStarted) {
       const timeInterval = setInterval(countdown, 1000);
       return () => {
@@ -66,11 +88,11 @@ function App() {
     }
 
     if (word.charAt(word.length - 1) === " ") {
-      if(word !== currWord+" "){
+      if((word !== currWord+" ") && word !== " "){
         setIncWord([...incWord, word]);
       }
       setIndex(index + 1);
-      setWordsTyped([...wordsTyped, inputText]);
+      (word !== " ") && setWordsTyped([...wordsTyped, inputText]);
       setInputText("");
     } else {
       setInputText(word);
@@ -89,6 +111,26 @@ function App() {
 
   return (
     <div className="container">
+      {(showResult) && <div className="result-container">
+        <div className="heading">Typing speed</div>
+        <div className="fx" style={{ justifyContent: "space-between" }}>
+          <div className="speed-val" style={{borderRight : "solid 1px #9ca5ac", width : "50%"}}>
+            <span className="num">{totalWordsTyped.length} - {totalIncWord.length}</span> WPM ( Only correct words count )
+          </div>
+          <div className="word-text fx" style={{borderRight : "solid 1px #9ca5ac"}}>
+            <span className="speed-val">Words count</span>
+            <span className="val">{totalWordsTyped.length}</span>
+          </div>
+          <div className="word-text fx">
+            <span className="speed-val">Accuracy</span>
+            <span className="val">
+              {
+              (((wordsTyped.length - incWord.length)/wordsTyped.length)*100).toFixed(2)
+              }%
+            </span>
+          </div>
+        </div>
+      </div>}
       <div className="App fx">
        {(!showResult) && <div className="paragraph">
           {strPara.map((word, i) => {
@@ -142,26 +184,7 @@ function App() {
           </button>
         </div>
       </div>
-      {(showResult) && <div className="result-container">
-        <div className="heading">Typing speed</div>
-        <div className="fx" style={{ justifyContent: "space-between" }}>
-          <div className="speed-val" style={{borderRight : "solid 1px #9ca5ac", width : "50%"}}>
-            <span className="num">{wordsTyped.length - incWord.length}</span> WPM ( Only correct words count )
-          </div>
-          <div className="word-text fx" style={{borderRight : "solid 1px #9ca5ac"}}>
-            <span className="speed-val">Words count</span>
-            <span className="val">{wordsTyped.length}</span>
-          </div>
-          <div className="word-text fx">
-            <span className="speed-val">Accuracy</span>
-            <span className="val">
-              {
-              (((wordsTyped.length - incWord.length)/wordsTyped.length)*100).toFixed(2)
-              }%
-            </span>
-          </div>
-        </div>
-      </div>}
+      {(!showResult) && <Keyboard />}
     </div>
   );
 }
