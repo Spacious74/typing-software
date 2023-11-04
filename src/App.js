@@ -19,10 +19,10 @@ function App() {
   const wordStyle = {
     backgroundColor:
       inputText.slice(-1) === ""
-        ? "#b7ccdf"
+        ? "#d0dfec"
         : inputText === currWord.slice(0, inputText.length)
-        ? "#b7ccdf"
-        : "#ff7272",
+        ? "#d0dfec"
+        : "#ffa4a4",
   };
 
   const [wordsTyped, setWordsTyped] = useState([]);
@@ -31,9 +31,9 @@ function App() {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     if (!timerStarted) {
-      return `00:20`;
+      return `01:00`;
     }
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    return `0${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
   const countdown = () => {
@@ -43,11 +43,8 @@ function App() {
       alert("Time's up!");
       setTimerStarted(false);
       setInputText("");
-      setWordsTyped([]);
       setShowResult(true);
       setIndex(0);
-      console.log(wordsTyped);
-      console.log(incWord);
     }
   };
 
@@ -65,12 +62,10 @@ function App() {
     const word = e.target.value;
     if (!timerStarted) {
       setTimerStarted(true);
-      setTime(20); // Setting time in seconds.
+      setTime(60); // Setting time in seconds.
     }
 
     if (word.charAt(word.length - 1) === " ") {
-      console.log(`word: ${word}, current Word: ${currWord}`);
-      // console.log("spacebar pressed");
       if(word !== currWord+" "){
         setIncWord([...incWord, word]);
       }
@@ -88,13 +83,14 @@ function App() {
     setWordsTyped([]);
     setTimerStarted(false);
     setInputText("");
+    setShowResult(false);
   };
 
 
   return (
     <div className="container">
       <div className="App fx">
-        <div className="paragraph">
+       {(!showResult) && <div className="paragraph">
           {strPara.map((word, i) => {
             const typedWord = wordsTyped[i] || "";
             let wordColor = "#000";
@@ -104,8 +100,7 @@ function App() {
             } else if (typedWord === word.slice(0, typedWord.length)) {
               wordColor = "#697c8b"; // Partially correct word
             } else {
-              wordColor = "#ff0000";
-            // Incorrect word
+              wordColor = "#ff0000"; // Incorrect word
             }
 
             return (
@@ -121,7 +116,7 @@ function App() {
               </span>
             );
           })}
-        </div>
+        </div>}
         <div className="inp-container fx">
           <input
             type="text"
@@ -129,15 +124,21 @@ function App() {
             autoFocus={true}
             onChange={handleInputChange}
             value={inputText}
+            disabled = {(showResult) && true}
           />
 
           <div className="timer">{updateTimer()}</div>
-          <button className="refresh" title="Refresh" onClick={handleRefresh}>
+          <button 
+          className="refresh fx" 
+          title="Restart the test" 
+          onClick={handleRefresh}
+          style={{color : showResult && "#fff", backgroundColor : showResult && "#40d440", boxShadow : showResult && "0px 8px 15px #6eff6ed3, 1px 2px 5px #75ff759a"}}
+          >
             <img
               className="icon"
-              src="https://img.icons8.com/ios-glyphs/30/ffffff/refresh--v1.png"
+              src="https://img.icons8.com/ios-glyphs/25/d3fcd3/refresh--v1.png"
               alt="refresh--v1"
-            />
+            /> Restart
           </button>
         </div>
       </div>
@@ -153,7 +154,11 @@ function App() {
           </div>
           <div className="word-text fx">
             <span className="speed-val">Accuracy</span>
-            <span className="val">{((wordsTyped.length - incWord.length)/wordsTyped.length)*100}</span>
+            <span className="val">
+              {
+              (((wordsTyped.length - incWord.length)/wordsTyped.length)*100).toFixed(2)
+              }%
+            </span>
           </div>
         </div>
       </div>}

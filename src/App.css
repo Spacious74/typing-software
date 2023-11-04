@@ -3,6 +3,9 @@
   align-items: center;
   justify-content: center;
 }
+*{
+  font-family: 'Open sans';
+}
 body{
   background-color: #f0f8ff;
 }
@@ -23,7 +26,6 @@ body{
 
 .App .inp-container{
   gap: 20px;
-  width: 90%;
 }
 .inp-container .inptext{
   font-size: 1.5rem;
@@ -42,19 +44,23 @@ body{
   padding: 10px 20px;
   border-radius: 10px;
   color: #fff;
+  font-family: "Open sans";
 }
 .icon{
   display: inline-block;
   vertical-align: middle;
 }
 .inp-container .refresh{
-  background-color: #339e33;
-  color: #fff;
+  background-color: #54bd54;
+  color: #d3fcd3;
   padding: 10px 20px;
   border-radius: 10px;
   font-size: 1.5rem;
   border: none;
   cursor: pointer;
+  width: 250px;
+  gap: 10px;
+  font-family: "Open sans";
 }
 
 .active{
@@ -76,7 +82,7 @@ body{
 .result-container .heading{
   font-size: 1.2rem;
   margin-bottom: 15px;
-  color: #9ca5ac;
+  font-weight: bolder;
 }
 
 .result-container .num{
