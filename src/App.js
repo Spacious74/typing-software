@@ -111,13 +111,11 @@ function App() {
         setIncWord([...incWord, word]);
       }
       setIndex(index + 1);
-      (word !== " ") && setWordsTyped([...wordsTyped, inputText]);
+      setWordsTyped([...wordsTyped, inputText]);
       setInputText("");
     } else {
       setInputText(word);
     }
-    console.log("Words typed : ",wordsTyped);
-    console.log("Wrong words : ",incWord);
   };
 
   const handleRefresh = () => {
@@ -176,7 +174,7 @@ function App() {
                     {word}
                   </span>
                 ) : (
-                  <span style={{ color: wordColor }}>{word}</span>
+                  <span style={{color : wordColor}}>{word}</span>
                 )}
               </span>
             );
