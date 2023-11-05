@@ -4,6 +4,7 @@ import "./App.css";
 import Keyboard from "./Components/Keyboard/Keyboard";
 import randomParagraph from "random-paragraph";
 import Navbar from "./Components/Navbar/Navbar";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   // state variable for setting initial paragraph
@@ -234,6 +235,7 @@ function App() {
     <img width="48" height="48" src="https://img.icons8.com/color/48/break--v4.png" alt="break--v4"/> <br />
       Please open in Desktop or Laptop
     </div>
+    <Footer />
     </>
   );
 }

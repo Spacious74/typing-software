@@ -1,0 +1,14 @@
+.footer{
+    background-color: #45525e;
+    padding: 10px 20px;
+    gap: 20px;
+}
+.footer .tagline{
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: bolder;
+}
+
+.footer a{
+    color: #dedeff;
+}
