@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import Keyboard from "./Components/Keyboard/Keyboard";
 import randomParagraph from "random-paragraph";
+import Navbar from "./Components/Navbar/Navbar";
 
 function App() {
-
-  // state variable for setting initial paragraph 
+  // state variable for setting initial paragraph
   const [para, setPara] = useState(randomParagraph({ sentences: 2 }));
   const strPara = para.split(" "); // making array of strings for paragraph.
 
@@ -16,7 +16,7 @@ function App() {
   // This inputText variable is for input field where user is typing
   const [inputText, setInputText] = useState("");
 
-  // By default timerStarted is false when user started typing this variable set to true and timer starts 
+  // By default timerStarted is false when user started typing this variable set to true and timer starts
   const [timerStarted, setTimerStarted] = useState(false);
 
   // This time variable is for time left which is updated every second how ? see the rest code below.
@@ -47,7 +47,7 @@ function App() {
         : inputText === currWord.slice(0, inputText.length)
         ? "#d0dfec"
         : "#ffa4a4",
-  }
+  };
 
   const updateTimer = () => {
     const minutes = Math.floor(time / 60);
@@ -58,7 +58,7 @@ function App() {
     return `0${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
-  const alertShown = useRef(false); 
+  const alertShown = useRef(false);
   const countdown = () => {
     if (time > 0) {
       setTime(time - 1);
@@ -71,7 +71,7 @@ function App() {
       setTotalWordsTyped([...totalWordsTyped, ...wordsTyped]);
       console.log("Total incorrect words : ", totalIncWord);
       console.log("Total Words : ", totalWordsTyped);
-      setPara(randomParagraph({ sentences: 2 }))
+      setPara(randomParagraph({ sentences: 2 }));
       if (!alertShown.current) {
         alert("Time's up!");
         alertShown.current = true; // Set the ref to true to indicate that the alert has been shown
@@ -88,7 +88,6 @@ function App() {
       setTotalWordsTyped([...totalWordsTyped, ...wordsTyped]);
       setIncWord([]);
       setWordsTyped([]);
-  
     }
     if (timerStarted) {
       const timeInterval = setInterval(countdown, 1000);
@@ -107,7 +106,7 @@ function App() {
     }
 
     if (word.charAt(word.length - 1) === " ") {
-      if((word !== currWord+" ") && word !== " "){
+      if (word !== currWord + " " && word !== " ") {
         setIncWord([...incWord, word]);
       }
       setIndex(index + 1);
@@ -122,6 +121,7 @@ function App() {
     setIndex(0);
     setInputText("");
     setWordsTyped([]);
+    setIncWord([]);
     setTimerStarted(false);
     setInputText("");
     setShowResult(false);
@@ -129,57 +129,72 @@ function App() {
     setTotalWordsTyped([]);
   };
 
-
   return (
-    <div className="container">
-      {(showResult) && <div className="result-container">
-        <div className="heading">Typing speed</div>
-        <div className="fx" style={{ justifyContent: "space-between" }}>
-          <div className="speed-val" style={{borderRight : "solid 1px #9ca5ac", width : "50%"}}>
-            <span className="num">{totalWordsTyped.length - totalIncWord.length}</span> WPM ( Only correct words count )
-          </div>
-          <div className="word-text fx" style={{borderRight : "solid 1px #9ca5ac"}}>
-            <span className="speed-val">Words count</span>
-            <span className="val">{totalWordsTyped.length}</span>
-          </div>
-          <div className="word-text fx">
-            <span className="speed-val">Accuracy</span>
-            <span className="val">
-              {
-              (((totalWordsTyped.length - totalIncWord.length)/totalWordsTyped.length)*100).toFixed(2)
-              }%
-            </span>
+    <><div className="container">
+      {showResult && (
+        <div className="result-container">
+          <div className="heading">Typing speed</div>
+          <div className="fx" style={{ justifyContent: "space-between" }}>
+            <div
+              className="speed-val"
+              style={{ borderRight: "solid 1px #9ca5ac", width: "50%" }}
+            >
+              <span className="num">
+                {totalWordsTyped.length - totalIncWord.length}
+              </span>{" "}
+              WPM ( Only correct words count )
+            </div>
+            <div
+              className="word-text fx"
+              style={{ borderRight: "solid 1px #9ca5ac" }}
+            >
+              <span className="speed-val">Words count</span>
+              <span className="val">{totalWordsTyped.length}</span>
+            </div>
+            <div className="word-text fx">
+              <span className="speed-val">Accuracy</span>
+              <span className="val">
+                {(
+                  ((totalWordsTyped.length - totalIncWord.length) /
+                    totalWordsTyped.length) *
+                  100
+                ).toFixed(2)}
+                %
+              </span>
+            </div>
           </div>
         </div>
-      </div>}
+      )}
       <div className="App fx">
-       {(!showResult) && <div className="paragraph">
-          {strPara.map((word, i) => {
-            const typedWord = wordsTyped[i] || "";
-            let wordColor = "#000";
+        {!showResult && (
+          <div className="paragraph">
+            {strPara.map((word, i) => {
+              const typedWord = wordsTyped[i] || "";
+              let wordColor = "#000";
 
-            if (typedWord === word) {
-              wordColor = "#000"; // Correctly typed word
-            } else if (typedWord === word.slice(0, typedWord.length)) {
-              wordColor = "#697c8b"; // Partially correct word
-            } else {
-              wordColor = "#ff0000"; // Incorrect word
-            }
+              if (typedWord === word) {
+                wordColor = "#000"; // Correctly typed word
+              } else if (typedWord === word.slice(0, typedWord.length)) {
+                wordColor = "#697c8b"; // Partially correct word
+              } else {
+                wordColor = "#ff0000"; // Incorrect word
+              }
 
-            return (
-              <span key={i}>
-                {" "}
-                {(i === index) ? (
-                  <span className="active" style={wordStyle}>
-                    {word}
-                  </span>
-                ) : (
-                  <span style={{color : wordColor}}>{word}</span>
-                )}
-              </span>
-            );
-          })}
-        </div>}
+              return (
+                <span key={i}>
+                  {" "}
+                  {i === index ? (
+                    <span className="active" style={wordStyle}>
+                      {word}
+                    </span>
+                  ) : (
+                    <span style={{ color: wordColor }}>{word}</span>
+                  )}
+                </span>
+              );
+            })}
+          </div>
+        )}
         <div className="inp-container fx">
           <input
             type="text"
@@ -187,26 +202,37 @@ function App() {
             autoFocus={true}
             onChange={handleInputChange}
             value={inputText}
-            disabled = {(showResult) && true}
+            disabled={showResult && true}
           />
 
           <div className="timer">{updateTimer()}</div>
-          <button 
-          className="refresh fx" 
-          title="Restart the test" 
-          onClick={handleRefresh}
-          style={{color : showResult && "#fff", backgroundColor : showResult && "#40d440", boxShadow : showResult && "0px 8px 15px #6eff6ed3, 1px 2px 5px #75ff759a"}}
+          <button
+            className="refresh fx"
+            title="Restart the test"
+            onClick={handleRefresh}
+            style={{
+              color: showResult && "#fff",
+              backgroundColor: showResult && "#40d440",
+              boxShadow:
+                showResult && "0px 8px 15px #6eff6ed3, 1px 2px 5px #75ff759a",
+            }}
           >
             <img
               className="icon"
               src="https://img.icons8.com/ios-glyphs/25/d3fcd3/refresh--v1.png"
               alt="refresh--v1"
-            /> Restart
+            />{" "}
+            Restart
           </button>
         </div>
       </div>
-      {(!showResult) && <Keyboard />}
+      {!showResult && <Keyboard />}
     </div>
+    <div className="message fx">
+    <img width="48" height="48" src="https://img.icons8.com/color/48/break--v4.png" alt="break--v4"/> <br />
+      Please open in Desktop or Laptop
+    </div>
+    </>
   );
 }
 

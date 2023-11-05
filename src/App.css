@@ -112,3 +112,23 @@ body{
   font-weight: bolder;
   color: #697c8b;
 }
+.message{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  flex-direction: column;
+  gap: 20px;
+  display: none;
+}
+
+@media screen and (max-width : 768px) {
+  .container{
+    display: none;
+  }
+  .message{
+    display: block;
+    text-align: center;
+  }
+}

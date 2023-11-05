@@ -1,100 +1,102 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Keyboard.css'
 
 function Keyboard() {
 
-  document.addEventListener("keydown", (event) => {
-    const keyPressed = String.fromCharCode(event.keyCode);
-    let keyElement = document.getElementById(keyPressed);
-  
-    if (event.keyCode === 8) {
-      return;
-    }
-  
-    if (event.key === "Control") {
-      if (event.ctrlKey) {
-        if (event.location === 1) {
-  
-          keyElement = document.getElementById("ctrl");
-        } else if (event.location === 2) {
-  
-          keyElement = document.getElementById("ctrlright");
-        }
-      }
-    }
-  
-    if (event.key === "Alt") {
-      if (event.altKey) {
-        if (event.location === 1) {
-  
-          keyElement = document.getElementById("alt");
-        }
-      }
-    }
-  
-    if (event.key === "Enter") {
-      keyElement = document.getElementById("enter");
-    }
-  
-    if (event.key === "Shift") {
-      if (event.shiftKey) {
-        if (event.location === 1) {
-  
-          keyElement = document.getElementById("left-shift");
-        } else if (event.location === 2) {
-  
-          keyElement = document.getElementById("right-shift");
-        }
-      }
-    }
-  
-    if (event.keyCode === 222) {
-      keyElement = document.getElementById("apost");
-    }
-  
-    if (event.keyCode === 188) {
-      keyElement = document.getElementById("comma");
-    }
-  
-    // Check for Period key (key code 190)
-    if (event.keyCode === 190) {
-      keyElement = document.getElementById("dot");
-    }
-  
-    // Check for Slash key (key code 191)
-    if (event.keyCode === 191) {
-      keyElement = document.getElementById("slash");
-    }
-  
-    if (event.keyCode === 186) {
-      keyElement = document.getElementById("semicolon");
-    }
-  
-    if (event.key === " ") {
-      keyElement = document.getElementById("space");
-    }
-  
-    if (event.key === "[") {
-      keyElement = document.getElementById("leftsq");
-  
-    }
-    if (event.key === "]") {
-      keyElement = document.getElementById("rightsq");
-  
-    }
-    if (event.key === "\\") {
-      keyElement = document.getElementById("backslash");
-    }
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      const keyPressed = String.fromCharCode(event.keyCode);
+      let keyElement = document.getElementById(keyPressed);
 
-    if(keyElement == null){
-      return;
-    }
-  
-    keyElement.classList.add("hit");
-    keyElement.addEventListener("animationend", () => {
-      keyElement.classList.remove("hit");
-    });
-  });
+      if (event.keyCode === 8) {
+        return;
+      }
+
+      if (event.key === "Control") {
+        if (event.ctrlKey) {
+          if (event.location === 1) {
+            keyElement = document.getElementById("ctrl");
+          } else if (event.location === 2) {
+            keyElement = document.getElementById("ctrlright");
+          }
+        }
+      }
+
+      if (event.key === "Alt") {
+        if (event.altKey) {
+          if (event.location === 1) {
+            keyElement = document.getElementById("alt");
+          }
+        }
+      }
+
+      if (event.key === "Enter") {
+        keyElement = document.getElementById("enter");
+      }
+
+      if (event.key === "Shift") {
+        if (event.shiftKey) {
+          if (event.location === 1) {
+            keyElement = document.getElementById("left-shift");
+          } else if (event.location === 2) {
+            keyElement = document.getElementById("right-shift");
+          }
+        }
+      }
+
+      if (event.keyCode === 222) {
+        keyElement = document.getElementById("apost");
+      }
+
+      if (event.keyCode === 188) {
+        keyElement = document.getElementById("comma");
+      }
+
+      if (event.keyCode === 190) {
+        keyElement = document.getElementById("dot");
+      }
+
+      if (event.keyCode === 191) {
+        keyElement = document.getElementById("slash");
+      }
+
+      if (event.keyCode === 186) {
+        keyElement = document.getElementById("semicolon");
+      }
+
+      if (event.key === " ") {
+        keyElement = document.getElementById("space");
+      }
+
+      if (event.key === "[") {
+        keyElement = document.getElementById("leftsq");
+      }
+
+      if (event.key === "]") {
+        keyElement = document.getElementById("rightsq");
+      }
+
+      if (event.key === "\\") {
+        keyElement = document.getElementById("backslash");
+      }
+
+      if (keyElement == null) {
+        return;
+      }
+
+      keyElement.classList.add("hit");
+      keyElement.addEventListener("animationend", () => {
+        keyElement.classList.remove("hit");
+      });
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
+
   
 
   return (
