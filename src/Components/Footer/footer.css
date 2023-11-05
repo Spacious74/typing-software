@@ -2,6 +2,10 @@
     background-color: #45525e;
     padding: 10px 20px;
     gap: 20px;
+    width: 65%;
+    margin: auto;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
 }
 .footer .tagline{
     color: #fff;
@@ -11,4 +15,12 @@
 
 .footer a{
     color: #dedeff;
+}
+
+
+@media screen and (max-width: 768px) {
+    .footer{
+        width: auto;
+        border-radius: 0px;
+    }
 }
