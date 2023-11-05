@@ -85,6 +85,10 @@ function Keyboard() {
     if (event.key === "\\") {
       keyElement = document.getElementById("backslash");
     }
+
+    if(keyElement == null){
+      return;
+    }
   
     keyElement.classList.add("hit");
     keyElement.addEventListener("animationend", () => {

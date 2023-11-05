@@ -1,25 +1,43 @@
+// Protype.com- website name
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import Keyboard from "./Components/Keyboard/Keyboard";
 import randomParagraph from "random-paragraph";
 
 function App() {
+
+  // state variable for setting initial paragraph 
   const [para, setPara] = useState(randomParagraph({ sentences: 2 }));
+  const strPara = para.split(" "); // making array of strings for paragraph.
 
-  const strPara = para.split(" ");
-
+  // Setting current word index to 0 by default index is 0 its means that current word is at strPara(0).
   const [index, setIndex] = useState(0);
+
+  // This inputText variable is for input field where user is typing
   const [inputText, setInputText] = useState("");
+
+  // By default timerStarted is false when user started typing this variable set to true and timer starts 
   const [timerStarted, setTimerStarted] = useState(false);
+
+  // This time variable is for time left which is updated every second how ? see the rest code below.
   const [time, setTime] = useState(null);
+
+  // This wordsTyped variable is for saving the words that is typed by the user completely in a single paragraph.
   const [wordsTyped, setWordsTyped] = useState([]);
-  const [totalIncWord, setTotalIncWord] = useState([]);
-  const [totalWordsTyped, setTotalWordsTyped] = useState([]);
+
+  // This incWord variable collects wrong words typed by the user in a single paragraph
   const [incWord, setIncWord] = useState([]);
+
+  // This totalIncWord variable is used to collect all wrong words in multiple paragraphs.
+  const [totalIncWord, setTotalIncWord] = useState([]);
+
+  // Same here this totalWordsTyped variable is used to collect all words in multiple paragraphs.
+  const [totalWordsTyped, setTotalWordsTyped] = useState([]);
+
+  // This showResult variable is used to display the result when timer ends.
   const [showResult, setShowResult] = useState(false);
 
-  
-
+  // Here we are setting the currWord.
   const currWord = strPara[index] || "";
 
   const wordStyle = {
@@ -29,8 +47,7 @@ function App() {
         : inputText === currWord.slice(0, inputText.length)
         ? "#d0dfec"
         : "#ffa4a4",
-  };
-
+  }
 
   const updateTimer = () => {
     const minutes = Math.floor(time / 60);
@@ -46,12 +63,14 @@ function App() {
     if (time > 0) {
       setTime(time - 1);
     } else {
-      console.log("Total incorrect words : ", totalIncWord);
-      console.log("Total Words : ", totalWordsTyped);
       setTimerStarted(false);
       setInputText("");
       setShowResult(true);
       setIndex(0);
+      setTotalIncWord([...totalIncWord, ...incWord]);
+      setTotalWordsTyped([...totalWordsTyped, ...wordsTyped]);
+      console.log("Total incorrect words : ", totalIncWord);
+      console.log("Total Words : ", totalWordsTyped);
       setPara(randomParagraph({ sentences: 2 }))
       if (!alertShown.current) {
         alert("Time's up!");
@@ -97,6 +116,8 @@ function App() {
     } else {
       setInputText(word);
     }
+    console.log("Words typed : ",wordsTyped);
+    console.log("Wrong words : ",incWord);
   };
 
   const handleRefresh = () => {
@@ -106,6 +127,8 @@ function App() {
     setTimerStarted(false);
     setInputText("");
     setShowResult(false);
+    setTotalIncWord([]);
+    setTotalWordsTyped([]);
   };
 
 
@@ -115,7 +138,7 @@ function App() {
         <div className="heading">Typing speed</div>
         <div className="fx" style={{ justifyContent: "space-between" }}>
           <div className="speed-val" style={{borderRight : "solid 1px #9ca5ac", width : "50%"}}>
-            <span className="num">{totalWordsTyped.length} - {totalIncWord.length}</span> WPM ( Only correct words count )
+            <span className="num">{totalWordsTyped.length - totalIncWord.length}</span> WPM ( Only correct words count )
           </div>
           <div className="word-text fx" style={{borderRight : "solid 1px #9ca5ac"}}>
             <span className="speed-val">Words count</span>
@@ -125,7 +148,7 @@ function App() {
             <span className="speed-val">Accuracy</span>
             <span className="val">
               {
-              (((wordsTyped.length - incWord.length)/wordsTyped.length)*100).toFixed(2)
+              (((totalWordsTyped.length - totalIncWord.length)/totalWordsTyped.length)*100).toFixed(2)
               }%
             </span>
           </div>
@@ -148,7 +171,7 @@ function App() {
             return (
               <span key={i}>
                 {" "}
-                {(word === currWord && i === index) ? (
+                {(i === index) ? (
                   <span className="active" style={wordStyle}>
                     {word}
                   </span>
