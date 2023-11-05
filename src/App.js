@@ -130,7 +130,9 @@ function App() {
   };
 
   return (
-    <><div className="container">
+    <>
+    <Navbar />
+    <div className="container">
       {showResult && (
         <div className="result-container">
           <div className="heading">Typing speed</div>
