@@ -1,6 +1,6 @@
 {
-  "name": "typing-software",
   "homepage": "http://spacious74.github.io/typing-software",
+  "name": "typing-software",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
