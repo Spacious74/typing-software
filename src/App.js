@@ -2,13 +2,17 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import Keyboard from "./Components/Keyboard/Keyboard";
-import randomParagraph from "random-paragraph";
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
+import paraArr from "./data";
 
 function App() {
   // state variable for setting initial paragraph
-  const [para, setPara] = useState(randomParagraph({ sentences: 2 }));
+  const [paraIndex, setParaIndex] = useState(0);
+  if(paraIndex === paraArr.length-1){
+    setParaIndex(0);
+  }
+  const [para, setPara] = useState(paraArr[paraIndex]);
   const strPara = para.split(" "); // making array of strings for paragraph.
 
   // Setting current word index to 0 by default index is 0 its means that current word is at strPara(0).
@@ -70,9 +74,7 @@ function App() {
       setIndex(0);
       setTotalIncWord([...totalIncWord, ...incWord]);
       setTotalWordsTyped([...totalWordsTyped, ...wordsTyped]);
-      console.log("Total incorrect words : ", totalIncWord);
-      console.log("Total Words : ", totalWordsTyped);
-      setPara(randomParagraph({ sentences: 2 }));
+      setPara(paraArr[paraIndex]);
       if (!alertShown.current) {
         alert("Time's up!");
         alertShown.current = true; // Set the ref to true to indicate that the alert has been shown
@@ -81,15 +83,6 @@ function App() {
   };
 
   useEffect(() => {
-    if (index === strPara.length) {
-      // The user has completed the current paragraph
-      setPara(randomParagraph({ sentences: 2 })); // Fetch a new random paragraph
-      setIndex(0); // Reset the index
-      setTotalIncWord([...totalIncWord, ...incWord]);
-      setTotalWordsTyped([...totalWordsTyped, ...wordsTyped]);
-      setIncWord([]);
-      setWordsTyped([]);
-    }
     if (timerStarted) {
       const timeInterval = setInterval(countdown, 1000);
       return () => {
@@ -107,18 +100,31 @@ function App() {
     }
 
     if (word.charAt(word.length - 1) === " ") {
-      if (word !== currWord + " " && word !== " ") {
+      if (word !== currWord + " ") {
         setIncWord([...incWord, word]);
       }
       setIndex(index + 1);
       setWordsTyped([...wordsTyped, inputText]);
       setInputText("");
+
+      if(index === strPara.length-1){
+        setIndex(0); // Reset the index
+        setTotalIncWord([...totalIncWord, ...incWord]);
+        setTotalWordsTyped([...totalWordsTyped, ...wordsTyped]);
+        setIncWord([]);
+        setWordsTyped([]);
+        setParaIndex(paraIndex+1);
+        setPara(paraArr[paraIndex+1]);
+      }
+
     } else {
       setInputText(word);
     }
   };
 
   const handleRefresh = () => {
+    setParaIndex(paraIndex+1);
+    setPara(paraArr[paraIndex+1])
     setIndex(0);
     setInputText("");
     setWordsTyped([]);

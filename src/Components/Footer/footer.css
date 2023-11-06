@@ -6,6 +6,10 @@
     margin: auto;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0%);
 }
 .footer .tagline{
     color: #fff;
@@ -20,7 +24,7 @@
 
 @media screen and (max-width: 768px) {
     .footer{
-        width: auto;
+        width: 100%;
         border-radius: 0px;
     }
 }
