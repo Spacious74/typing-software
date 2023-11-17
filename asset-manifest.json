@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/typing-software/static/css/main.799edb89.css",
-    "main.js": "/typing-software/static/js/main.bcce8b65.js",
+    "main.css": "/typing-software/static/css/main.25a57003.css",
+    "main.js": "/typing-software/static/js/main.d92da1d7.js",
     "static/js/787.4a13a4ae.chunk.js": "/typing-software/static/js/787.4a13a4ae.chunk.js",
     "index.html": "/typing-software/index.html",
-    "main.799edb89.css.map": "/typing-software/static/css/main.799edb89.css.map",
-    "main.bcce8b65.js.map": "/typing-software/static/js/main.bcce8b65.js.map",
+    "main.25a57003.css.map": "/typing-software/static/css/main.25a57003.css.map",
+    "main.d92da1d7.js.map": "/typing-software/static/js/main.d92da1d7.js.map",
     "787.4a13a4ae.chunk.js.map": "/typing-software/static/js/787.4a13a4ae.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.799edb89.css",
-    "static/js/main.bcce8b65.js"
+    "static/css/main.25a57003.css",
+    "static/js/main.d92da1d7.js"
   ]
 }
