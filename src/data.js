@@ -20,4 +20,29 @@ const paraArr= [
     "There was no way that grandpa, who had been dead for five years, could have told him where the treasure had been hidden. Of course, it didn't help that grandpa was roaring",
     "Sleeping in his car was never the plan but sometimes things don't work out as planned. This had been his life for the last three months and he was just beginning to get used to it"
 ];
-export default paraArr
+
+const l1 = [
+    "Exemplifying perspicacity, the enigmatic polymath embarked on an odyssey through the labyrinthine catacombs of esoteric knowledge. The juxtaposition of arcane symbols' and", 
+    "Navigating this lexical tapestry required not only nimble fingers but also an indomitable spirit. As the cursor blinked expectantly; the intrepid typist harnessed their prowess,", 
+    "cryptic syntax challenged even the most adept typists.. In the realm of keystrokes, they forged a symphony of complexity, leaving ordinary prose in the wake of their typing mastery.",
+    "Beneath the veneer of mundane existence, a cacophony: of ineffable phenomena unfolds, testing the mettle of the intrepid typist. Quantum entanglements of syntax and semantics demand a",
+    "In the crucible of cyberspace, where algorithms dance with entropy, a virtuoso typist navigates the intricate ballet of characters, each keystroke a choreographed step,",
+    "Metaphysical quandaries unfurl as the typist grapple's with the sublime conundrum of encoding the ethereal nuances of thought into the rigid structure of pixels and bytes, a task",
+    "The arcane sigils of code, like cryptic; runes etched into the fabric... of the virtual/ realm, beckon the adept typist to decipher the enigmatic incantations that govern the behavior of",
+    "In the labyrinth of syntax, where loops intertwine and .conditionals converge, the master typist wields their /keyboard as a wizard's staff, conjuring spells of logic and weaving incantations",
+    "As the quantum bits entwine in a delicate ballet of computation, the intrepid typist orchestrates a symphony of characters, weaving an algorithmic tapestry that transcends the boundaries",
+    "In the crucible of algorithmic creation, the typist forges a path through the crucible of complexity, sculpting code like an artisan molds clay, crafting a digital masterpiece that",
+    "Amidst the binary stars of logic and abstraction, the typist navigates the celestial expanse of the code, a cosmic explorer charting the uncharted realms of data with a keyboard."
+]
+
+const l2 = [
+    "Flibberish consectetur adipiscing elit. Quizzle sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Dingleberry ullamcorper eget nulla facilisi. Quackish porttitor",
+    "Higgledy:piggledy lacinia erat volutpat, jibber'jabber in fermentum nisl blandit. Balderdash ullamcorper eget nulla facilisi. Flummox porttitor lacus luctus accumsan.",
+    "Brouhaha aliquam erat volutpat, willy-nilly in fermentum nisl blandit. Haberdashery ullamcorper eget nulla facilisi. Discombobulate porttitor lacus luctus accumsan.",
+    "Helter[skelter] aliquam erat volutpat, flibbertigibbet in fermentum nisl blandit. Whippersnapper ullamcorper eget nulla facilisi. Gobbledygook porttitor lacus luctus accumsan",
+    "Bamboozle aliquam erat volutpat, discombobulate in fermentum nisl blandit. Higgledy-piggledy ullamcorper eget nulla facilisi. Dilly-dally porttitor lacus luctus accumsan",
+    "Kaleidoscopic discombobulation bamboozles the polymathic sycophant. Supercalifragilisticexpialidocious shenanigans bedazzle the precocious bibliophile. Higgledy;piggledy helter:skelter",
+    "flibbertigibbet bamboozles the erudite savant. Supercalifragilisticexpialidocious discombobulation bedevils the sagacious logophile. Zephyr hodgepodge gobbledygook flummoxes the quizzical bibliophile",
+    "Obfuscate pseudopseudohypoparathyroidism bamboozles the mellifluous polyglot. Gobbledygook balderdash befuddles the sesquipedalian maestro. Discombobulate shenanigans bedazzle the perspicacious cognoscente."
+]
+export {paraArr, l1, l2}

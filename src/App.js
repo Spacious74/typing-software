@@ -4,16 +4,24 @@ import "./App.css";
 import Keyboard from "./Components/Keyboard/Keyboard";
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
-import paraArr from "./data";
+import {paraArr, l1, l2} from "./data";
+import Result from "./Components/Result/Result";
 
 function App() {
-  // state variable for setting initial paragraph
+
+  const [paraData, setParaData] = useState(paraArr);
+  const [level, setLevel] = useState("E");
+  const [lvlStatus, setlvlStatus] = useState(false);
+
+
+  // state variable for setting initial paragraph index
   const [paraIndex, setParaIndex] = useState(0);
-  if(paraIndex === paraArr.length-1){
+  if(paraIndex === paraData.length-1){
     setParaIndex(0);
   }
-  const [para, setPara] = useState(paraArr[paraIndex]);
+  const [para, setPara] = useState(paraData[paraIndex]);
   const strPara = para.split(" "); // making array of strings for paragraph.
+
 
   // Setting current word index to 0 by default index is 0 its means that current word is at strPara(0).
   const [index, setIndex] = useState(0);
@@ -74,7 +82,7 @@ function App() {
       setIndex(0);
       setTotalIncWord([...totalIncWord, ...incWord]);
       setTotalWordsTyped([...totalWordsTyped, ...wordsTyped]);
-      setPara(paraArr[paraIndex]);
+      setPara(paraData[paraIndex]);
       if (!alertShown.current) {
         alert("Time's up!");
         alertShown.current = true; // Set the ref to true to indicate that the alert has been shown
@@ -89,8 +97,19 @@ function App() {
         clearInterval(timeInterval);
       };
     }
+    if(level === "E" && lvlStatus){
+      setParaData(paraArr);
+      setlvlStatus(false);
+    }else if(level === "M" && lvlStatus){
+      setParaData(l1); 
+      setlvlStatus(false);
+    }else if(level === "H" && lvlStatus){
+      setParaData(l2);
+      setlvlStatus(false);
+    }
+    setPara(paraData[paraIndex]);
     // eslint-disable-next-line
-  }, [time, timerStarted]);
+  }, [time, timerStarted, lvlStatus]);
 
   const handleInputChange = (e) => {
     const word = e.target.value;
@@ -114,7 +133,7 @@ function App() {
         setIncWord([]);
         setWordsTyped([]);
         setParaIndex(paraIndex+1);
-        setPara(paraArr[paraIndex+1]);
+        setPara(paraData[paraIndex+1]);
       }
 
     } else {
@@ -124,7 +143,7 @@ function App() {
 
   const handleRefresh = () => {
     setParaIndex(paraIndex+1);
-    setPara(paraArr[paraIndex+1])
+    setPara(paraData[paraIndex+1])
     setIndex(0);
     setInputText("");
     setWordsTyped([]);
@@ -136,46 +155,24 @@ function App() {
     setTotalWordsTyped([]);
   };
 
+  const handleLevelChange = (e)=>{
+    setLevel(e.target.value);
+    setlvlStatus(true);
+  }
+
   return (
     <>
     <Navbar />
     <div className="container">
+
+      {/* Result Section */}
       {showResult && (
-        <div className="result-container">
-          <div className="heading">Typing speed</div>
-          <div className="fx" style={{ justifyContent: "space-between" }}>
-            <div
-              className="speed-val"
-              style={{ borderRight: "solid 1px #9ca5ac", width: "50%" }}
-            >
-              <span className="num">
-                {totalWordsTyped.length - totalIncWord.length}
-              </span>{" "}
-              WPM ( Only correct words count )
-            </div>
-            <div
-              className="word-text fx"
-              style={{ borderRight: "solid 1px #9ca5ac" }}
-            >
-              <span className="speed-val">Words count</span>
-              <span className="val">{totalWordsTyped.length}</span>
-            </div>
-            <div className="word-text fx">
-              <span className="speed-val">Accuracy</span>
-              <span className="val">
-                {(
-                  ((totalWordsTyped.length - totalIncWord.length) /
-                    totalWordsTyped.length) *
-                  100
-                ).toFixed(2)}
-                %
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
+        <Result totalIncWord={totalIncWord} totalWordsTyped={totalWordsTyped} />      )}
+      
+      {/* Paragraph and input section */}
       <div className="App fx">
         {!showResult && (
+          // Paragraph
           <div className="paragraph">
             {strPara.map((word, i) => {
               const typedWord = wordsTyped[i] || "";
@@ -204,7 +201,9 @@ function App() {
             })}
           </div>
         )}
+        {/* Input, timer and button container */}
         <div className="inp-container fx">
+          {/* Input field */}
           <input
             type="text"
             className="inptext"
@@ -214,7 +213,10 @@ function App() {
             disabled={showResult && true}
           />
 
-          <div className="timer">{updateTimer()}</div>
+        {/* Timer section  */}
+        <div className="timer">{updateTimer()}</div>
+
+          {/* Restart Button */}
           <button
             className="refresh fx"
             title="Restart the test"
@@ -223,20 +225,31 @@ function App() {
               color: showResult && "#fff",
               backgroundColor: showResult && "#40d440",
               boxShadow:
-                showResult && "0px 8px 15px #6eff6ed3, 1px 2px 5px #75ff759a",
-            }}
+                showResult && "0px 8px 15px #6eff6ed3, 1px 2px 5px #75ff759a",}}
           >
             <img
               className="icon"
               src="https://img.icons8.com/ios-glyphs/25/d3fcd3/refresh--v1.png"
-              alt="refresh--v1"
-            />{" "}
-            Restart
+              alt="refresh"/>{" "}Restart
+          
           </button>
+
+          {/* Level setter */}
+          <div className="level-cont">
+            <select name="level" id="lvl" className="level" onChange={handleLevelChange}>
+              <option value="E">🏃🏻‍♂️ Easy</option>
+              <option value="M">🚶🏻‍♂️ Medium</option>
+              <option value="H">🧍🏻‍♂️ Hard</option>
+            </select>
+          </div>
+
         </div>
       </div>
+      {/* Keyboard component */}
       {!showResult && <Keyboard />}
+
     </div>
+
     <div className="message fx">
     <img width="48" height="48" src="https://img.icons8.com/color/48/break--v4.png" alt="break--v4"/> <br />
       Please open in Desktop or Laptop
